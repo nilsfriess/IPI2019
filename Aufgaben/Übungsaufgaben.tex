@@ -1,10 +1,10 @@
+%% -job-name=Übungsaufgaben
+
 \documentclass[a4paper,12pt]{article}
 \usepackage{fancyhdr}
 \usepackage{fancyheadings}
-\usepackage[ngerman,german]{babel}
-\usepackage{german}
+\usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
-% \usepackage[latin1]{inputenc}
 \usepackage[active]{srcltx}
 \usepackage{algorithm}
 \usepackage[noend]{algorithmic}
@@ -23,23 +23,9 @@
 \usepackage{array}   % for \newcolumntype macro
 \newcolumntype{C}{>{$}c<{$}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \newcommand{\Fach}{Einführung in die praktische Informatik}
 \newcommand{\Semester}{WS 18/19}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-\setlength{\parindent}{0em}
-\topmargin -1.0cm
-\oddsidemargin 0cm
-\evensidemargin 0cm
-\setlength{\textheight}{9.2in}
-\setlength{\textwidth}{6.0in}
-
-%%%%%%%%%%%%%%% 
-%% Aufgaben-COMMAND
 \newcommand{\Aufgabe}[1]{
   {
     \vspace*{0.5cm}
@@ -48,7 +34,7 @@
     
   }
 }
-%%%%%%%%%%%%%% 
+
 \hypersetup{
   pdftitle={Übungsaufgaben zur Klausur},
   pdfborder={0 0 0}
@@ -442,3 +428,7 @@ $$ f(n) = \mathcal{O}(n) \quad \text{ und } \quad g(n) = \mathcal{O}(n^2)  $$
   
 \end{quote}
 \end{document}
+
+% Local Variables:
+% LaTeX-command: "latex -jobname Übungsaufgaben"
+% End:
