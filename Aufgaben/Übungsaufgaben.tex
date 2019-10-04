@@ -1,8 +1,7 @@
-%% -job-name=Übungsaufgaben
-
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,12pt,parskip=full]{scrartcl}
 \usepackage{fancyhdr}
 \usepackage{fancyheadings}
+\usepackage[light]{kpfonts}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[active]{srcltx}
@@ -19,12 +18,13 @@
 \usepackage{color}
 \usepackage{struktex}
 \usepackage{hyperref}
+\usepackage[right=3.5cm, left=3.5cm, top=3cm, bottom=3cm]{geometry}
 
 \usepackage{array}   % for \newcolumntype macro
 \newcolumntype{C}{>{$}c<{$}}
 
 \newcommand{\Fach}{Einführung in die praktische Informatik}
-\newcommand{\Semester}{WS 18/19}
+\newcommand{\Semester}{WS 19/20}
 
 \newcommand{\Aufgabe}[1]{
   {
@@ -66,56 +66,84 @@
 \title{Übungsaufgaben zur Klausur}
 
 \begin{document}
-\thispagestyle{fancy} \lhead{\sf \large \Fach{}} \rhead{\sf
-  \Semester{}} \vspace*{0.2cm}
+\thispagestyle{fancy} \lhead{\textsc{\Fach{}}}
+\rhead{\textsc{\Semester{}}}
+
 \begin{center}
-  \LARGE \sf Übungsaufgaben zur Klausur \\
-  \vspace*{0.2cm}
-  \small \textit{Hinweis: Diese Aufgabensammlung deckt sicherlich nicht alle möglichen Themen ab, die in der Klausur vorkommen könnten, es genügt also sicherlich auch nicht, sich zur Vorbereitung nur diese Aufgaben anzuschauen.}
+  {\LARGE Übungsaufgaben zur Klausur} \\
 \end{center}
-\vspace*{0.2cm}
-Die Aufgaben sind nicht logisch angeordnet, weder was die Schwierigkeit, noch was das Thema betrifft. Fangt also nicht unbedingt mit Aufgabe 1 an, sondern sucht euch erstmal eine Aufgabe, bei der ihr euch sicher seid, dass ihr sie schafft und arbeitet euch dann Stück für Stück weiter. Die Fragen aus Aufgabe 0 solltet ihr jedoch alle problemlos beantworten können.
+\vspace*{0.2cm} Die Aufgaben folgen keiner speziellen Anordnung, weder
+was die Schwierigkeit, noch was das Thema betrifft. Fangt also nicht
+unbedingt mit Aufgabe 1 an, sondern sucht euch erstmal eine Aufgabe,
+bei der ihr euch sicher seid, dass ihr sie schafft und arbeitet euch
+dann Stück für Stück weiter.
 \\
 \vspace*{0.2cm}
 
 \Aufgabe{0 (Kurzfragen)}
 \begin{enumerate}[a)]
-\item Warum sind Turing-Maschinen im Zusammenhang mit dem Begriff der Berechenbarkeit so interessant? Was ist die Church-Turing-These?
-\item Was ist das Halteproblem? Zu welcher ``Klasse'' von Problemen gehört es?
-\item Programmiersprachen, in denen man (wenn unendlich viel Speicher zur Verfügung stünde) eine Turingmaschine emulieren kann, nennt man Turing-vollständig. Warum ist diese Eigenschaft interessant, bzw. was sagt das über die Programmiersprache aus?
-\item Was ist eine Referenz, wie wird sie deklariert und wozu benutzt man sie? Warum würde man Referenzen an Stelle von Zeigern benutzen? Wann können Referenzen Zeiger nicht ersetzen?
+\item Warum sind Turing-Maschinen im Zusammenhang mit dem Begriff der
+  Berechenbarkeit so interessant? Was ist die Church-Turing-These?
+\item Was ist das Halteproblem? Zu welcher ``Klasse'' von Problemen
+  gehört es?
+\item Programmiersprachen, in denen man (wenn unendlich viel Speicher
+  zur Verfügung stünde) eine Turingmaschine emulieren kann, nennt man
+  Turing-vollständig. Warum ist diese Eigenschaft interessant,
+  bzw. was sagt das über die Programmiersprache aus?
+\item Was ist eine Referenz, wie wird sie deklariert und wozu benutzt
+  man sie? Warum würde man Referenzen an Stelle von Zeigern benutzen?
+  Wann können Referenzen Zeiger nicht ersetzen?
 \item Welche verschiedenen Anwendungsfälle haben Zeiger?
-\item Was versteht man unter einem Seiteneffekt einer Funktion oder Methode?
+\item Was versteht man unter einem Seiteneffekt einer Funktion oder
+  Methode?
 \item Wann spricht man von Funktionen, wann von Methoden?
-\item Welchen Vorteil hat es, Speicher dynamisch zu allokieren? Und wie geht das überhaupt?
-\item Was heißt es, dass C++ streng typgebunden ist? Und was versteht man unter statischer Typisierung?
-\item Was sind typische Eigenschaften funktionaler Programmierung? Welche Vor- und Nachteile hat funktionale Programmierung?
-\item Was ist ein Konstruktor? Was ist der Default-Konstruktor? Was ist der Copy-Konstruktor?
+\item Welchen Vorteil hat es, Speicher dynamisch zu allokieren? Und
+  wie geht das überhaupt?
+\item Was heißt es, dass C++ streng typgebunden ist? Und was versteht
+  man unter statischer Typisierung?
+\item Was sind typische Eigenschaften funktionaler Programmierung?
+  Welche Vor- und Nachteile hat funktionale Programmierung?
+\item Was ist ein Konstruktor? Was ist der Default-Konstruktor? Was
+  ist der Copy-Konstruktor?
 \item Was ist der Destruktor?
-\item Was bedeutet Sichtbarkeit im Zusammenhang mit Klassen in C++? Welche verschiedenen ``Sichtbarkeiten'' gibt es in C++? Wofür werden sie jeweils verwendet?
+\item Was bedeutet Sichtbarkeit im Zusammenhang mit Klassen in C++?
+  Welche verschiedenen ``Sichtbarkeiten'' gibt es in C++? Wofür werden
+  sie jeweils verwendet?
 \item Was ist Vererbung? Gebe ein Minimalbeispiel an.
-\item Erläutere grob die einzelnen Schritte die durchgeführt werden, um vom Quellcode zum fertigen Programm zu kommen.
-\item Was ist Moore's law? Ist es immer noch gültig? Welche Auswirkungen hat das auf die Softwareentwicklung?
-\item Was versteht man unter Overloading (deutsch: Überladen) von Funktionen?
-\item Was versteht man unter \emph{Call by Value} und \emph{Call by Reference}?
+\item Erläutere grob die einzelnen Schritte die durchgeführt werden,
+  um vom Quellcode zum fertigen Programm zu kommen.
+\item Was ist Moore's law? Ist es immer noch gültig? Welche
+  Auswirkungen hat das auf die Softwareentwicklung?
+\item Was versteht man unter Overloading (deutsch: Überladen) von
+  Funktionen?
+\item Was versteht man unter \emph{Call by Value} und \emph{Call by
+    Reference}?
 \item Was versteht man unter der Signatur einer Funktion/ Methode?
 \item Was ist die Rule of Three?
-\item Was sind die Unterschiede zwischen einer \emph{shallow copy} und einer \emph{deep copy}?
-\item Mittels \lstinline{using namespace std;} kann man alles aus dem Namensraum \lstinline{std} ``bekannt'' machen. Welche Nachteile könnte das haben (bspw. in größeren Projekten)?
+\item Was sind die Unterschiede zwischen einer \emph{shallow copy} und
+  einer \emph{deep copy}?
+\item Mittels \lstinline{using namespace std;} kann man alles aus dem
+  Namensraum \lstinline{std} ``bekannt'' machen. Welche Nachteile
+  könnte das haben (bspw. in größeren Projekten)?
 \item Was ist eine \lstinline{friend}-Class?
-\item Was macht das Schlüsselwort \lstinline{inline} vor einer Funktionendeklaration?
+\item Was macht das Schlüsselwort \lstinline{inline} vor einer
+  Funktionendeklaration?
 \item Was ist eine abstrakte Klasse?
-\item Was ist der Unterschied zwischen öffentlicher und privater Vererbung?
+\item Was ist der Unterschied zwischen öffentlicher und privater
+  Vererbung?
 \end{enumerate}
 \begin{enumerate}[aa)]
 \item Was sind (rein) virtuelle Methoden?
-\item Was ist der Unterschied zwischen Overloading (Überladen) und Overriding (Überschreiben)?
+\item Was ist der Unterschied zwischen Overloading (Überladen) und
+  Overriding (Überschreiben)?
 \item Wozu verwendet man das Schlüsselwort \lstinline{template}?
-\item Was ist der Unterschied zwischen \lstinline{template <class T>} und \lstinline{template <typename T>}?
+\item Was ist der Unterschied zwischen \lstinline{template <class T>}
+  und \lstinline{template <typename T>}?
 \item Was ist \texttt{RISC}, was ist \texttt{CISC}?
 \item Was ist dynamischer Polymorphismus?
 \item Was ist statischer Polymorphismus?
-\item Was ist ein vollständiger binärer Baum? Was ist der Unterschied zu einem Heap?
+\item Was ist ein vollständiger binärer Baum? Was ist der Unterschied
+  zu einem Heap?
 \item Wann ist ein Sortierverfahren stabil?
 \end{enumerate}
 \newpage
@@ -131,10 +159,17 @@ Werte $p(\xi)$ mit Hilfe des \emph{Horner-Schemas} berechnet werden:
 \item
   Schreibe eine rekursive Funktion \lstinline{double horner(double coeffs[], int deg, double x)}, die für ein Polynom vom Grad \lstinline{deg}, dessen Koeffizienten im Array \lstinline{coeffs} stehen, das Polynom an der Stelle \lstinline{x} auswertet. \\
   Die Koeffizienten sollen dabei folgendermaßen in einem Array gespeichert werden: \\
-  Für $p(x) = 3 - 2x + 3x^2 - 4x^4$ ist \lstinline|coeffs = { -4, 0, 3, -2, 3 }| (d.h. der höchste Koeffizient kommt zuerst). Außerdem ist  \lstinline{deg = 4} und bspw. p(2) würde ausgewertet durch den Aufruf \lstinline{horner(coeffs, 4, 2) = -981 }.
+  Für $p(x) = 3 - 2x + 3x^2 - 4x^4$ ist \lstinline|coeffs = { -4, 0, 3, -2, 3 }|
+  (d.h. der höchste Koeffizient kommt zuerst). Außerdem
+  ist \lstinline{deg = 4} und bspw. p(2) würde ausgewertet durch den
+  Aufruf \lstinline{horner(coeffs, 4, 2) = -981 }.
   
-\item Schreibe nun die Funktion aus a) iterativ. Was ist die Zeitkomplexität in Abhängigkeit von \texttt{n} der iterativen Variante?
-\item[c)*] Was könnten Vorteile des Horner-Schemas sein? Warum wertet man das Polynom nicht einfach ``normal'' aus, indem man einfach $\xi$ einsetzt?
+\item Schreibe nun die Funktion aus a) iterativ. Was ist die
+  Zeitkomplexität in Abhängigkeit von \texttt{n} der iterativen
+  Variante?
+\item[c)*] Was könnten Vorteile des Horner-Schemas sein? Warum wertet
+  man das Polynom nicht einfach ``normal'' aus, indem man einfach
+  $\xi$ einsetzt?
 \end{enumerate}
 
 \Aufgabe{2} Schreibe eine Funktion, die ein Polynom der Form
@@ -143,126 +178,146 @@ und die Koeffizienten $a_0, \dots, a_n$ extrahiert. \\
 Bsp.: Eingabe: \texttt{2 + 2x - 3x\textasciicircum 2 + 4x\textasciicircum 3}, Ausgabe: \texttt{ \{ 2, 2, -3, 4 \} } \\
 Hinweise:
 \begin{itemize}
-\item Der Einfachheit halber, kann davon ausgegangen werden, dass alle Koeffizienten einstellig sind,
-  also dass $|a_i| \le 9$, für alle $i=0,\dots,n$
+\item Der Einfachheit halber, kann davon ausgegangen werden, dass alle
+  Koeffizienten einstellig sind, also dass $|a_i| \le 9$, für alle
+  $i=0,\dots,n$
 \item Ersetze zunächst alle '-' durch '+-' mit der Methode
-  \lstinline{std::string::replace} (um bspw. im String \lstinline{s} alle
-  'a' durch 'b' zu ersetzen: \lstinline{replace(s.begin(), s.end(), 'a', 'b')} )
+  \lstinline{std::string::replace} (um bspw. im String \lstinline{s}
+  alle 'a' durch 'b' zu ersetzen: \lstinline{replace(s.begin(), s.end(), 'a', 'b')} )
 \item ``Splitte'' nun den String jeweils an den '+'. Du kannst
-  annehmen, dass eine Funktion \lstinline{std::vector<std::string> split(const std::string &s, char delimiter)} gegeben ist, die  einen String \lstinline{s} bei jedem Vorkommen von \lstinline{delimiter}
-  aufsplittet und die einzelnen Teile in einen \lstinline{std::vector}
-  schreibt (also bspw.: \lstinline|split("abc+def+ghi+jkl", '+') == { "abc", "def", "ghi", "jkl" }|
+  annehmen, dass eine Funktion \lstinline{std::vector<std::string> split(const std::string &s, char delimiter)} gegeben ist, die
+  einen String \lstinline{s} bei jedem Vorkommen von
+  \lstinline{delimiter} aufsplittet und die einzelnen Teile in einen
+  \lstinline{std::vector} schreibt (also bspw.:
+  \lstinline|split("abc+def+ghi+jkl", '+') == { "abc", "def", "ghi", "jkl" }|
 \item Nun kannst du den im vorherigen Schritt erstellten Vektor
   durchlaufen und die Koeffizienten extrahieren. Hier musst du nur
   aufpassen, falls ein Koeffizient 0 ist und das dazugehörige Monom
   gar nicht in der Eingabe vorkam (also bspw. $3 - 4x^2$, hier fehlt
-  der Term $0x$, d.h. der Koeffizientenvektor ist hier \texttt{\{ 3, 0, -4 \}})
+  der Term $0x$, d.h. der Koeffizientenvektor ist hier \texttt{\{ 3,
+    0, -4 \}})
 \end{itemize}
 
 \Aufgabe{3} Schreibe eine Funktion \lstinline{std::vector<std::string> split(const std::string &s, char delimiter)}, die einen String
-\lstinline{s} bei jedem Vorkommen von \lstinline{delimiter} aufsplittet und
-die einzelnen Teile in einen \lstinline{std::vector} schreibt (also
-bspw. sollte das Ergebnis von \lstinline|split("abc+def+ghi+jkl", '+')| das hier sein: \lstinline|{ "abc", "def", "ghi", "jkl" }| )
+\lstinline{s} bei jedem Vorkommen von \lstinline{delimiter}
+aufsplittet und die einzelnen Teile in einen \lstinline{std::vector}
+schreibt (also bspw. sollte das Ergebnis von
+\lstinline|split("abc+def+ghi+jkl", '+')| das hier sein: \lstinline|{"abc", "def", "ghi", "jkl" }| )
 \begin{itemize}
 \item Einen neuen \lstinline{std::vector}, der \lstinline{std::string}s enthält, legt man so an: \\
   \lstinline{std::vector<std::string> res;}
-\item Um \lstinline{res} ein neues Element hinzuzufügen, verwende \lstinline{res.push_back("test")}
+\item Um \lstinline{res} ein neues Element hinzuzufügen, verwende
+  \lstinline{res.push_back("test")}
 \item Die Funktion (siehe auch Übungsblatt 10) \\
   \centerline{ \lstinline{std::istream& getline(std::istream& is, std::string &s)} } \\
-  akzeptiert auch noch einen dritten Parameter \lstinline{char delimiter} und kann auch auf \lstinline{std::stringstream}s operieren (um einen \lstinline{std::stringstream} aus einem String zu erstellen, übergibt man einfach den jeweiligen String dem Konstruktor).
+  akzeptiert auch noch einen dritten Parameter \lstinline{char delimiter} und kann auch auf \lstinline{std::stringstream}s
+  operieren (um einen \lstinline{std::stringstream} aus einem String
+  zu erstellen, übergibt man einfach den jeweiligen String dem
+  Konstruktor).
 \end{itemize}
 
-\Aufgabe{4}
-Implementiere die Funktion \lstinline{void reverse(std::string& s)}, die den String \lstinline{s} ``umdreht'', also bspw. aus \texttt{Hallowelt} \texttt{tlewollaH} macht, auf die folgenden Arten:
+\Aufgabe{4} Implementiere die Funktion \lstinline{void reverse(std::string& s)}, die den String \lstinline{s} ``umdreht'',
+also bspw. aus \texttt{Hallowelt} \texttt{tlewollaH} macht, auf die
+folgenden Arten:
 \begin{enumerate}[a)]
-\item Implementiere die Funktion mit einer \texttt{for}-Schleife und der Funktion \lstinline{std::swap(char &a, char &b)}, die den Wert von \texttt{a} und \texttt{b} tauscht. Die \texttt{for}-Schleife soll dabei \emph{nicht} den ganzen String durchlaufen, sondern (falls \texttt{n} die Länge des Strings ist) nur von \lstinline{i = 0} bis \lstinline{i < n / 2}.
-\item Implementiere die Funktion rekursiv, die Signatur der Funktion ändert sich dabei zu:
-  \lstinline{std::string reverse(const std::string &s)} und die Funktion ändert nicht den ursprünglichen String sondern gibt das Ergebnis zurück.
+\item Implementiere die Funktion mit einer \texttt{for}-Schleife und
+  der Funktion \lstinline{std::swap(char &a, char &b)}, die den Wert
+  von \texttt{a} und \texttt{b} tauscht. Die \texttt{for}-Schleife
+  soll dabei \emph{nicht} den ganzen String durchlaufen, sondern
+  (falls \texttt{n} die Länge des Strings ist) nur von \lstinline{i = 0} bis \lstinline{i < n / 2}.
+\item Implementiere die Funktion rekursiv, die Signatur der Funktion
+  ändert sich dabei zu: \lstinline{std::string reverse(const std::string &s)} und die Funktion ändert nicht den ursprünglichen
+  String sondern gibt das Ergebnis zurück.
 \end{enumerate}
 
-\Aufgabe{5}
-Rechne die folgenden Zahlen um:
+\Aufgabe{5} Rechne die folgenden Zahlen um:
 \begin{enumerate}[a)]
 \item $11011101_2$ ins Dezimalsystem
 \item $116_{10}$ ins Dualsystem
 \end{enumerate}
 
-\Aufgabe{6}
-Gegeben seien zwei Rechtecke in einem 2D-Koordinatensystem (jeweils parallel zu den Koordinatenachsen). Diese können eindeutig durch Angabe der Koordinaten der linken oberen Ecke und der rechten unteren Ecke bestimmt werden:
+\Aufgabe{6} Gegeben seien zwei Rechtecke in einem 2D-Koordinatensystem
+(jeweils parallel zu den Koordinatenachsen). Diese können eindeutig
+durch Angabe der Koordinaten der linken oberen Ecke und der rechten
+unteren Ecke bestimmt werden:
 \begin{lstlisting}
   class Rectangle {
-  public:
+    public:
     double x1, y1; // linke obere Ecke
     double x2, y2; // rechte untere Ecke
   }
 \end{lstlisting}
-Schreibe eine Methode \lstinline{bool Rectangle::doesOverlap(const Rectangle other)}, die für ein Rechteckt prüft, ob sich seine Fläche und die Fläche eines anderen Rechtecks überschneiden.
+Schreibe eine Methode \lstinline{bool Rectangle::doesOverlap(const Rectangle other)}, die für ein Rechteckt prüft, ob sich seine Fläche
+und die Fläche eines anderen Rechtecks überschneiden.
 
 \Aufgabe{7}
 \begin{enumerate}[a)]
-\item 
-Implementiere eine Klasse, die eine doppelt verkettete Liste repräsentiert und zumindest folgendes Interface erfüllt:
-\begin{lstlisting}
-class DLL {
-public:
-  void addFirst(int value);
-  int removeFirst();
+\item Implementiere eine Klasse, die eine doppelt verkettete Liste
+  repräsentiert und zumindest folgendes Interface erfüllt:
+  \begin{lstlisting}
+    class DLL {
+      public:
+      void addFirst(int value);
+      int removeFirst();
 
-  void print() const;
-  void printReverse() const;
+      void print() const;
+      void printReverse() const;
 
-  ~DLL();
+      ~DLL();
   
-private:
-  struct IntListItem {
-    int value = 0;
-    IntListItem *next = nullptr;
-    IntListItem *prev = nullptr;
-  };
+      private:
+      struct IntListItem {
+        int value = 0;
+        IntListItem *next = nullptr;
+        IntListItem *prev = nullptr;
+      };
 
-  IntListItem *first = nullptr;
-  IntListItem *last = nullptr;
-  int count = 0;
-};
-\end{lstlisting}
-Untenstehende \lstinline{main}-Funktion soll folgenden Output erzeugen: \\
-\texttt{List: 4 -> 3 -> 2 -> 1 \\
-List (reversed): 1 -> 2 -> 3 -> 4
-}
-\begin{lstlisting}
-int main() {
-  DLL list;
-  list.addFirst(1);
-  list.addFirst(2);
-  list.addFirst(3);
-  list.addFirst(4);
+      IntListItem *first = nullptr;
+      IntListItem *last = nullptr;
+      int count = 0;
+    };
+  \end{lstlisting}
+  Untenstehende \lstinline{main}-Funktion soll folgenden Output erzeugen: \\
+  \texttt{List: 4 -> 3 -> 2 -> 1 \\
+    List (reversed): 1 -> 2 -> 3 -> 4 }
+  \begin{lstlisting}
+    int main() {
+      DLL list;
+      list.addFirst(1);
+      list.addFirst(2);
+      list.addFirst(3);
+      list.addFirst(4);
 
-  list.print();
-  list.printReverse();
+      list.print();
+      list.printReverse();
   
-  return 0; 
-}
-\end{lstlisting}
-\item Welche Vorteile hat diese Variante gegenüber einfach verketteten Listen? Und gegenüber einem normalen Array? Welche Nachteile gibt es?
+      return 0; 
+    }
+  \end{lstlisting}
+\item Welche Vorteile hat diese Variante gegenüber einfach verketteten
+  Listen? Und gegenüber einem normalen Array? Welche Nachteile gibt
+  es?
 \end{enumerate}
 
-\Aufgabe{8}
-Gegeben sei die Turingmaschine $M$ mit den Endzuständen $z_3$ und $z_5$, dem Startzustand $z_0$ und untenstehendem Programm.
+\Aufgabe{8} Gegeben sei die Turingmaschine $M$ mit den Endzuständen
+$z_3$ und $z_5$, dem Startzustand $z_0$ und untenstehendem Programm.
 \begin{table}[ht]
-\centering
-\begin{tabular}{C C C C C}
-  \text{Zustand} & \text{Eingabe} & \text{Ausgabe} & \text{Richtung} & \text{Folgez.} \\
-  \hline
-  z_0 & b & b & R & z_1 \\
-  z_1 & b & 0 & L & z_3 \\
-  z_1 & 0 & b & R & z_2 \\
-  z_2 & b & 0 & L & z_4 \\
-  z_2 & 0 & b & R & z_1 \\
-  z_4 & b & 0 & L & z_5 \\
-\end{tabular}
+  \centering
+  \begin{tabular}{C C C C C}
+    \text{Zustand} & \text{Eingabe} & \text{Ausgabe} & \text{Richtung} & \text{Folgez.} \\
+    \hline
+    z_0 & b & b & R & z_1 \\
+    z_1 & b & 0 & L & z_3 \\
+    z_1 & 0 & b & R & z_2 \\
+    z_2 & b & 0 & L & z_4 \\
+    z_2 & 0 & b & R & z_1 \\
+    z_4 & b & 0 & L & z_5 \\
+  \end{tabular}
 \end{table}
 
-Die Turingmaschine berechnet die charakteristische Funktion $\chi_M : \mathbb{N} \rightarrow \{0,1\}$ einer unbekannten Menge $M \subseteq \mathbb{N}$, d.h.
+Die Turingmaschine berechnet die charakteristische Funktion
+$\chi_M : \mathbb{N} \rightarrow \{0,1\}$ einer unbekannten Menge
+$M \subseteq \mathbb{N}$, d.h.
 \begin{align*}
   \chi_M(n) =
   \begin{cases}
@@ -271,65 +326,72 @@ Die Turingmaschine berechnet die charakteristische Funktion $\chi_M : \mathbb{N}
   \end{cases}
 \end{align*}
 \begin{enumerate}[a)]
-\item Ziel ist es, herauszufinden, um welche Menge $M$ es sich handelt. Eingabe und Ausgabe werden dabei durch eine Unärdarstellung codiert: $n \in \mathbb{N}$ entspricht $0^{n+1}$, d.h. $0 = 0$, $1 = 00$, $2=000$ etc. Die Ausgabe der Turingmaschine ist am Ende die Zahl, die rechts vom Schreib-Lese-Kopf steht.
-\item Entwerfe nun eine Turingmaschine, welche die charakteristische Funktion $\chi_{M^{\mathsf{c}}}$ des Komplements $M^{\mathsf{c}} = \mathbb{N} \setminus M$ berechnet, d.h. $ \chi_{M^{\mathsf{c}}}(n) = 1 - \chi_M(n)  $.
+\item Ziel ist es, herauszufinden, um welche Menge $M$ es sich
+  handelt. Eingabe und Ausgabe werden dabei durch eine Unärdarstellung
+  codiert: $n \in \mathbb{N}$ entspricht $0^{n+1}$, d.h. $0 = 0$,
+  $1 = 00$, $2=000$ etc. Die Ausgabe der Turingmaschine ist am Ende
+  die Zahl, die rechts vom Schreib-Lese-Kopf steht.
+\item Entwerfe nun eine Turingmaschine, welche die charakteristische
+  Funktion $\chi_{M^{\mathsf{c}}}$ des Komplements
+  $M^{\mathsf{c}} = \mathbb{N} \setminus M$ berechnet, d.h.
+  $ \chi_{M^{\mathsf{c}}}(n) = 1 - \chi_M(n) $.
 \end{enumerate}
-\Aufgabe{9}
-Du stößt in einem Programm auf folgenden Ausschnitt:
+\Aufgabe{9} Du stößt in einem Programm auf folgenden Ausschnitt:
 \begin{lstlisting}
   // Pruefe, ob der Eintrag an der Stelle i, j Null ist
   if (std::abs(matrix[i][j]) < 1e-12) {
     ...
   }
 \end{lstlisting}
-Erkläre, warum der Code und das Kommentar darüber (auch wenn nicht ideal formuliert) trotzdem Sinn ergeben.
+Erkläre, warum der Code und das Kommentar darüber (auch wenn nicht
+ideal formuliert) trotzdem Sinn ergeben.
 
-\Aufgabe{10}
-Formalisiere den Begriff Algorithmus. Welche speziellen Typen von Algorithmen gibt es und was zeichnet sie aus? Nenne jeweils ein Beispiel.
+\Aufgabe{10} Formalisiere den Begriff Algorithmus. Welche speziellen
+Typen von Algorithmen gibt es und was zeichnet sie aus? Nenne jeweils
+ein Beispiel.
 
-\Aufgabe{11}
-Ersetze im folgenden Programmausschnitt die \lstinline{if-else}-Konstruktion durch eine einzige möglichst vereinfachte \lstinline{if}-Anweisung:
+\Aufgabe{11} Ersetze im folgenden Programmausschnitt die
+\lstinline{if-else}-Konstruktion durch eine einzige möglichst
+vereinfachte \lstinline{if}-Anweisung:
 \begin{lstlisting}
-if (true) {
-  if (x > 0) {
-    if (x%2 == 0)
+  if (true) {
+    if (x > 0) {
+      if (x%2 == 0)
       std::cout << x;
-  } else {
-    if ((-x)%3 == 0)
-    std::cout << x;
+    } else {
+      if ((-x)%3 == 0)
+      std::cout << x;
+    }
   }
-}
 \end{lstlisting}
 
 \Aufgabe{12}
 \begin{enumerate}[a)]
-\item 
-  Was macht der folgende Algorithmus?
+\item Was macht der folgende Algorithmus?
   \begin{lstlisting}
-void func(int a[], int b) {
-  for (int j = 1; j < b; j++)
-    for (int i = j; i > 0 && a[i-1] > a[i]; i--) {
-      int c = a[i];
-      a[i] = a[i-1];
-      a[i-1] = c;
+    void func(int a[], int b) {
+      for (int j = 1; j < b; j++)
+      for (int i = j; i > 0 && a[i-1] > a[i]; i--) {
+        int c = a[i];
+        a[i] = a[i-1];
+        a[i-1] = c;
+      }
     }
-}
   \end{lstlisting}
 \item Welche Laufzeit hat der Algorithmus im schlechtesten Fall?
 \end{enumerate}
 
 \Aufgabe{13}
 \begin{enumerate}[a)]
-\item 
-  Berechne die Zweierkomplementdarstellung der folgenden Zahlen:
+\item Berechne die Zweierkomplementdarstellung der folgenden Zahlen:
   \begin{enumerate}[i)]
   \item -30
   \item 25
   \item 123
   \end{enumerate}
 
-\item
-  Rechne die folgenden Zahlen, die in Zweierkomplementdarstellung vorliegen, ins Dezimalsystem um:
+\item Rechne die folgenden Zahlen, die in Zweierkomplementdarstellung
+  vorliegen, ins Dezimalsystem um:
   \begin{enumerate}[i)]
   \item 11111111
   \item 11100000
@@ -339,38 +401,47 @@ void func(int a[], int b) {
 \item Welche Vorteile hat die Zweierkomplementdarstellung?
 \end{enumerate}
 
-\Aufgabe{14}
-Implementiere eine Klasse, die einen Stack modelliert. Der Typ der Werte auf dem Stack, soll durch templates allgemein gehalten werden, d.h. die Klassendefinition sieht folgendermaßen aus:
+\Aufgabe{14} Implementiere eine Klasse, die einen Stack
+modelliert. Der Typ der Werte auf dem Stack, soll durch templates
+allgemein gehalten werden, d.h. die Klassendefinition sieht
+folgendermaßen aus:
 \begin{lstlisting}
-template <class T>
-class Stack {
-public:
-  Stack(int capacity);
-  ~Stack();
-  bool push(T);
-  T pop();
+  template <class T>
+  class Stack {
+    public:
+    Stack(int capacity);
+    ~Stack();
+    bool push(T);
+    T pop();
 
-private:
-  ...
-};
+    private:
+    ...
+  };
 \end{lstlisting}
 
 \Aufgabe{15}
 \begin{enumerate}[a)]
-\item Erstelle eine Funktion \lstinline{double mean(const std::vector<double>& v)}, die den Mittelwert $\mathbb{E}[v]$ aller Einträge in dem Vektor $v$ zurückliefert:
+\item Erstelle eine Funktion \lstinline{double mean(const std::vector<double>& v)}, die den Mittelwert $\mathbb{E}[v]$ aller
+  Einträge in dem Vektor $v$ zurückliefert:
   $$
   \mathbb{E}[v] = \frac{1}{N} \sum\limits_{i=1}^N{v_i},
   $$
   wobei $N$ die Anzahl der Einträge im Vektor angibt.
-\item Erstelle eine Funktion \lstinline{double median(const std::vector<double>& v)}, die den Median aller Einträge in dem Vektor $v$ zurückliefert. Um den Median zu berechnen, erstelle eine sortierte Kopie $\tilde{v}$ von $v$ und bestimme $M(v)$ als
+\item Erstelle eine Funktion \lstinline{double median(const std::vector<double>& v)}, die den Median aller Einträge in dem
+  Vektor $v$ zurückliefert. Um den Median zu berechnen, erstelle eine
+  sortierte Kopie $\tilde{v}$ von $v$ und bestimme $M(v)$ als
   $$
   M(v) =
   \begin{cases}
     \tilde{v}_{\frac{N+1}{2}} & N \text{ ungerade } \\
-    \frac{1}{2} ( \tilde{v}_{\frac{N}{2}} +  \tilde{v}_{\frac{N}{2}+1} ) & N \text{ gerade }
+    \frac{1}{2} ( \tilde{v}_{\frac{N}{2}} + \tilde{v}_{\frac{N}{2}+1}
+    ) & N \text{ gerade }
   \end{cases}
   $$
-  wobei $N$ die Anzahl der Einträge im Vektor angibt. Beachte die unterschiedlichen Indizierungsstrategien (1-basiert in der Formel oben, 0-basiert in C++), sowie den Spezialfall, dass der Vektor leer ist. Benutze zum Sortieren \lstinline{std::sort(v.begin(), v.end())}.
+  wobei $N$ die Anzahl der Einträge im Vektor angibt. Beachte die
+  unterschiedlichen Indizierungsstrategien (1-basiert in der Formel
+  oben, 0-basiert in C++), sowie den Spezialfall, dass der Vektor leer
+  ist. Benutze zum Sortieren \lstinline{std::sort(v.begin(), v.end())}.
 \end{enumerate}
 
 \Aufgabe{16}
@@ -389,20 +460,28 @@ private:
   Aufgabe löst?
 \end{enumerate}
 
-\Aufgabe{17}
-Gegeben seien folgende Zahlen: $$ \{ 5, 8, 2, 10, 1, 3, 2, 6 \}  $$
+\Aufgabe{17} Gegeben seien folgende Zahlen:
+$$ \{ 5, 8, 2, 10, 1, 3, 2, 6 \} $$
 \begin{itemize}
-\item Baue aus diesen Zahlen einen Max-Heap (d.h. das größte Element steht in der Wurzel). Zeichne den vollständigen Baum nach jedem Schritt und erläutere kurz, wie das Element eingefügt wurde.
-\item Lösche nun die Wurzel aus dem Baum und erläutere die dabei auftretende Schritte.
-\item Wieviele ``Ebenen'' hat ein Heap (in Abhängigkeit der Anzahl der Elemente $n$)? Wie kann man daraus die Komplexität der Operation ``Einfügen'' ableiten?
+\item Baue aus diesen Zahlen einen Max-Heap (d.h. das größte Element
+  steht in der Wurzel). Zeichne den vollständigen Baum nach jedem
+  Schritt und erläutere kurz, wie das Element eingefügt wurde.
+\item Lösche nun die Wurzel aus dem Baum und erläutere die dabei
+  auftretende Schritte.
+\item Wieviele ``Ebenen'' hat ein Heap (in Abhängigkeit der Anzahl der
+  Elemente $n$)? Wie kann man daraus die Komplexität der Operation
+  ``Einfügen'' ableiten?
 \item Erläutere kurz die Funktionsweise von Heapsort.
 \end{itemize}
 
-\Aufgabe{18}
-Schreibe eine templatisierte Funktion \texttt{quicksort}, die einen \lstinline{std::vector<T>} mittels dem Quicksort-Algorithmus sortiert. Das Pivot-Element soll dabei immer das ``mittlere'' Element der jeweiligen Liste sein (bei einer geraden Anzahl an Elemente soll das letzte Element der ersten Hälfte ausgewählt werden).
+\Aufgabe{18} Schreibe eine templatisierte Funktion \texttt{quicksort},
+die einen \lstinline{std::vector<T>} mittels dem Quicksort-Algorithmus
+sortiert. Das Pivot-Element soll dabei immer das ``mittlere'' Element
+der jeweiligen Liste sein (bei einer geraden Anzahl an Elemente soll
+das letzte Element der ersten Hälfte ausgewählt werden).
 
-\Aufgabe{19}
-Es seien zwei Algorithmen $f, g$ gegeben, die beide die selbe Aufgabe lösen. Es gelte
+\Aufgabe{19} Es seien zwei Algorithmen $f, g$ gegeben, die beide die
+selbe Aufgabe lösen. Es ist bekannt, dass
 $$ f(n) = \mathcal{O}(n) \quad \text{ und } \quad g(n) = \mathcal{O}(n^2)  $$
 \begin{enumerate}[a)]
 \item Diskutiere die folgende Aussage:
@@ -410,7 +489,8 @@ $$ f(n) = \mathcal{O}(n) \quad \text{ und } \quad g(n) = \mathcal{O}(n^2)  $$
     \emph{Der Algorithmus $f$ ist schneller als $g$.}
   \end{quote}
 
-\item Es wurde nun die Zeit gemessen, die die beiden Algorithmen für verschiedene Eingabelängen $n$ brauchten:
+\item Es wurde nun die Zeit in ms gemessen, die die beiden Algorithmen für
+  verschiedene Eingabelängen $n$ brauchten:
   \begin{table}[h!]
     \centering
     \begin{tabular}[h!]{c | l | l}
@@ -422,13 +502,14 @@ $$ f(n) = \mathcal{O}(n) \quad \text{ und } \quad g(n) = \mathcal{O}(n^2)  $$
     \end{tabular}
   \end{table}
   \\
-  Offenbar ist $g$ für all diese Eingabelängen schneller als $f$. Steht das im Widerspruch zu deiner Erklärung zur Aussage von a)?
+  Offenbar ist $g$ für all diese Eingabelängen schneller als
+  $f$. Steht das im Widerspruch zu deiner Erklärung zur Aussage von
+  a)?
+
+\item Nenne die (asymptotischen) Laufzeiten der in der Vorlesung besprochenen Sortieralgorithmen und
+  sortiere diese. 
 \end{enumerate}
-\begin{quote}
-  
-\end{quote}
 \end{document}
 
 % Local Variables:
-% LaTeX-command: "latex -jobname Übungsaufgaben"
 % End:
