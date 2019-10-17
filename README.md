@@ -2,7 +2,7 @@
 
 Abgabe ist generell in Gruppen von **2-3** Personen möglich. Versucht bitte einigermaßen pünktlich abzugeben.
 Programmieraufgaben **müssen** per Mail abgegeben werden. Dabei ist folgendes zu beachten:
-+ Die Dateien müssen als Archivdatei gepackt sein, entweder als `.zip` oder `.tar` (oder ähnliches, nur bitte kein `.rar`). Im Dateinamen des Archivs kommen die Namen der Abgebenden vor.
++ Die Dateien müssen als Archivdatei gepackt sein, entweder als `.zip` oder `.tar` (oder ähnliches, nur bitte kein `.rar`). Im Dateinamen der Archivdatei kommen die Namen aller aus der Abgabegruppe vor (also bspw. sowas wie `NilsFriess_ErikaMustermann.tar`.
 + Das Dateiformat der einzelnen Dateien ist entweder `.cc` für (Sourcedateien) oder `.hh` (für Header; wird später in der Vorlesung wichtig).
 + Die Dateien sind nach (Teil-)aufgaben zu trennen (also keine Dateien)
 + Die Archive enthalten nur den Code, den ihr geschrieben habt (und bspw. nicht die kompilierten Programme)
