@@ -1,3 +1,4 @@
+
 \documentclass[a4paper,12pt,parskip=full]{scrartcl}
 \usepackage{fancyhdr}
 \usepackage{fancyheadings}
@@ -509,7 +510,24 @@ $$ f(n) = \mathcal{O}(n) \quad \text{ und } \quad g(n) = \mathcal{O}(n^2)  $$
 \item Nenne die (asymptotischen) Laufzeiten der in der Vorlesung besprochenen Sortieralgorithmen und
   sortiere diese. 
 \end{enumerate}
+
+\Aufgabe{20}
+Ziel dieser Aufgabe ist es, in mehreren Schritten eine Funktion zu schreiben, die zwei
+\lstinline{std::string}s darauf überprüft, ob eines ein Anagramm des anderen ist.
+Wir benutzen dazu die Eindeutigkeit der Primfaktorzerlegung, was auf einen cleveren
+-- wenn auch ineffizienten -- Trick führt.
+Angenommen wir haben jedem Buchstaben des Alphabets eindeutig eine Primzahl zugeordnet.
+Wir können dann jedem Buchstaben eines Wortes eine Primzahl zuordnen und anschließend
+das Produkt dieser Primzahlen bilden. Dann gilt: Ein Wort ist genau dann Anagramm
+eines anderen Wortes, wenn dieses Produkt für beide Wörter übereinstimmt. Gehe nun folgendermaßen vor:
+\begin{enumerate}[a)]
+\item Schreibe eine Funktion \lstinline{bool isPrime(unsigned int n)} die für die Zahl \texttt{n} prüft, ob diese eine Primzahl ist (bspw. durch einfaches Ausprobieren mithilfe des Modulo-Operators \texttt{\%}).
+\item Schreibe eine Funktion \lstinline{unsigned int findNextPrime(unsigned int n)}, die die kleinste Primzahl zurückgibt, die größer als \texttt{n} ist. Benutze die Funktion aus a).
+\item Schreibe eine Funktion \lstinline{unsigned int getPrime(const char c)} die für einen Buchstaben mithilfe der Funktion aus b) eine Primzahl zurückgibt. Diese Primzahl soll eindeutig für diesen Buchstaben sein (Hinweis: \lstinline{char}s sind eigentlich auch nur Zahlen, können also direkt nach \lstinline{int} gecastet werden).
+\end{enumerate}
+Diese Vorarbeit erlaubt es uns nun, eine Funktion \lstinline{bool anagram(const std::string first, const std::string second)} zu schreiben, die die eingangs gestellte Aufgabe löst. Um die beiden \lstinline{std::string}s Buchstabe für Buchstabe zu durchlaufen können \emph{range-based} For-Schleifen verwendet werden: \lstinline|for (auto c: string)|
 \end{document}
 
 % Local Variables:
 % End:
+ 
