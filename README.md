@@ -10,4 +10,7 @@ Programmieraufgaben **müssen** per Mail abgegeben werden. Dabei ist folgendes z
 
 Alle anderen Aufgaben werden per Zettelkasten abgegeben. Ihr könnt außerdem gerne Ausdrucke des Programmcodes, den ihr per Mail schickt, abgeben, dann kann ich eure Fehler direkt im Code markieren; falls ihr nur per Mail abgebt, bekommt ihr kein Feedback zu eurem Code.
 
+
+Hier noch ein Bild von mir, wenn ihr euren Code als Word-Datei abgebt:
+
 ![Falsche abgabe](abgabe.jpg?raw=true "Ich, wenn ihr euren Code als Word-Datei abgebt")
