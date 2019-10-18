@@ -9,3 +9,5 @@ Programmieraufgaben **müssen** per Mail abgegeben werden. Dabei ist folgendes z
 + Wäre cool, wenn die Dateien sinnvolle Namen haben, also bspw. `aufgabe1.cc` für die erste Aufgabe, `aufgabe2b.cc` für Aufgabenteil b) der zweiten Aufgabe etc.
 
 Alle anderen Aufgaben werden per Zettelkasten abgegeben. Ihr könnt außerdem gerne Ausdrucke des Programmcodes, den ihr per Mail schickt, abgeben, dann kann ich eure Fehler direkt im Code markieren; falls ihr nur per Mail abgebt, bekommt ihr kein Feedback zu eurem Code.
+
+![Falsche abgabe](abgabe.jpg?raw=true "Ich, wenn ihr euren Code als Word-Datei abgebt")
