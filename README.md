@@ -14,3 +14,7 @@ Alle anderen Aufgaben werden per Zettelkasten abgegeben. Ihr könnt außerdem ge
 Hier noch ein Bild von mir, wenn ihr euren Code als Word-Datei abgebt:
 
 ![Falsche abgabe](abgabe.jpg?raw=true "Ich, wenn ihr euren Code als Word-Datei abgebt")
+
+# Hinweise zu den hochgeladenen Lösungen
+
+Die Lösungen die ihr in diesem Repository findet sind lediglich Vorschläge. Es handelt sich _nicht_ um Musterlösungen; sie sind oftmals unvollständig und/ oder enthalten Fehler.
