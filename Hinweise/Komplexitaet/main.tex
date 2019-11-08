@@ -1,0 +1,207 @@
+\documentclass[fontsize=12pt,paper=14,div=calc,parskip=full]{scrartcl}
+
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{newpxtext}
+\usepackage[euler-digits]{eulervm}
+\usepackage{microtype}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+\addtokomafont{disposition}{\rmfamily}
+
+\def\N{\mathbb{N}}
+\def\R{\mathbb{R}}
+
+\begin{document}
+\section*{Landau-Symbole}
+Es ist nicht praktisch die Laufzeit von Algorithmen durch die Zeit in
+Sekunden anzugeben, die der Algorithmus auf einem speziellen Computer
+benötigt. Einerseits ist die Laufzeit auf anderen Systemen
+wahrscheinlich anders, andererseits ist man insb.\ daran interessiert,
+die Laufzeit in Abhängigkeit der Eingabegröße zu analysieren, um
+bspw.\ Algorithmen, die die selbe Aufgabe lösen, auf einfache Art und 
+Weise miteinander vergleichen zu können.
+
+Dazu versucht man zunächst die Laufzeit eines Algorithmus als Funktion
+der Eingabegröße zu beschreiben, d.\,h.\ man sucht eine Funktion
+\[
+  f : \N \rightarrow \R_+ \,,
+\]
+die in Abhängigkeit der Länge/ Größe der Eingabe $n$ die Anzahl der
+Operationen (also der einzelnen Schritte), die der Algorithmus
+durchführt, berechnet ($\R_+$ steht hier für die positiven reellen
+Zahlen, d.\,h.\ $\R_+ = (0, \infty)$). Angenommen, man hat für einen
+Algorithmus eine solche Funktion gefunden, diese sei bspw.
+$f(n) = n^2 + 2n$. Ist man nun besonders daran interessiert, wie sich
+die Laufzeit für sehr große Eingaben verhält (also für sehr große
+$n$), so kann man abschätzen
+\[
+  f(n) \approx n^2 \quad \text{ für } n \text{ sehr groß}\,.
+\]
+Da man sehr häufig an solchen \emph{asymptotischen} Aussagen
+interessiert ist, führt man nun Definitionen ein, die diese
+Abschätzungen etwas präzisieren, die sog. \emph{Landau-Symbole}.
+
+Wir definieren diese Symbole hier explizit als Menge von Funktionen,
+was in der Vorlesung nur implizit in der Definition steckt.
+
+\subsection*{Die Klasse $\mathcal{O}(\cdot)$}
+Es sei $g : \N \rightarrow \R_+$ irgendeine Funktion. Dann definiert
+man
+\[
+  \mathcal{O}(g) \coloneqq \left\{ f : \N \rightarrow \R_+ \mid
+    \exists c > 0, N_0 \in \N: \quad f(n) \le c\,g(n) \quad \text{für
+      alle } n \ge N_0 \right\} \,.
+\]
+Die Menge $\mathcal{O}(g)$ (``Groß O von g'', engl. ``Big O'') enthält
+also alle Funktionen die durch die Funktion $g$ ``beschränkt''
+sind. Beschränkt ist wegen der Konstante $c$ natürlich nicht ganz der
+richtige Begriff. Man sagt auch, die Funktionen in $\mathcal{O}(g)$
+``wachsen ähnlich wie $g$'' oder ``wachsen nicht wesentlich schneller
+als $g$'' oder ``wachsen höchstens so schnell wie $g$''. Ist
+$f : \N \rightarrow \R_+$ eine Funktion in $\mathcal{O}(g)$, so
+schreibt man
+\[
+  f \in \mathcal{O}(g) \qquad \text{oder} \qquad f = \mathcal{O}(g)
+  \,,
+\]
+wobei das Gleichheitszeichen hier nicht als übliches ``ist gleich'' zu
+verstehen ist, sondern als ``gehört zu der Menge''.
+
+Am einfachsten macht man sich die Definition an ein paar Beispielen
+klar:
+\begin{itemize}
+\item Sei $f(n) = n$. Dann ist $f \in \mathcal{O}(n^2)$. Denn: für
+  alle $n \ge 2$ gilt
+  \[
+    n \le n^2\,,
+  \]
+  d.\,h.\, die Bedingung in der obigen Definition ist erfüllt mit
+  $c = 1$ und $N_0 = 2$. Analog argumentiert man, dass
+  $f \in \mathcal{O}(n^3)$, $f \in \mathcal{O}(n^4)$ etc. Manchmal
+  schreibt man auch einfach $n \in \mathcal{O}(n^2)$ und versteht hier
+  $n^2$ implizit als Funktion $f(n) = n^2$.
+
+\item Sei nun $f(n) = n^2$. Frage: Gilt $f \in \mathcal{O}(n)$? Um die
+  Frage zu beantworten, setzen wir in die Definition ein und versuchen
+  geeignete $c$ und $N_0$ zu finden: Es müsste also (mit noch
+  unbekannten $c, N_0$) gelten
+  \[
+    n^2 \le c n \quad \text{ für alle } n \ge N_0 \,.
+  \]
+  Wenn wir durch $n$ teilen, können wir die Ungleichung umformen zu
+  \[
+    n \le c \quad \text{ für alle } n \ge N_0 \,.
+  \]
+  Das bedeutet, für festes $c$ kann die Ungleichung immer nur für alle
+  $n$, die kleiner als c sind, erfüllt sein. Wir können $c$ zwar immer
+  weiter erhöhen, für alle $n > c$ ist die Aussage dann aber immer
+  falsch. Wir schließen daraus
+  \[
+    n^2 \not\in \mathcal{O}(n)\,.
+  \]
+\item Sei nun $f \equiv k$ für eine konstante $k \in \N$, d\,h.\ $f$
+  hat immer den Wert $k$.  Frage: Gilt $f \in \mathcal{O}(n)$?  Wir
+  betrachten wieder die Definition: Angenommen es gibt $c$ und $N_0$,
+  sodass die Behauptung gilt. Dann
+  \[
+    k \le c n \quad \text{ für alle } n \ge N_0 \,.
+  \]
+  Das ist bspw.\, erfüllt für $c = k$ und $N_0 = 1$, wir erhalten also
+  $f \in \mathcal{O}(n)$. Natürlich folgt dann auch direkt
+  $f \in \mathcal{O}(n^2)$, $f \in \mathcal{O}(n^3)$ etc.
+
+\item Oft kann man die Laufzeit eines Algorithmus als Polynom
+  darstellen, also als Funktion der Form
+  \[
+    p(n) = a_k n^k + a_{k-1} n^{k-1} + \dotsm + a_1 n + a_0 \,.
+  \]
+  Ist $k$ der höchste auftretende Exponent, dann sagt man $p$ ist vom
+  Grad $k$.  Betrachten wir als Beispiel die Funktion
+  $f(n) = 2n^2 + n - 1$. Frage: Liegt diese Funktion in
+  $\mathcal{O}(n^2)$. Ja! Denn falls $n \ge 2$ ist, dann gilt die
+  Ungleichung
+  \[
+    2n^2 + n - 1 < 2n^2 + n < 2n^2 + n * n = 3n^2\,,
+  \]
+  d.\,h.\ die Bedingung in der Definition ist erfüllt mit $c = 3$ und
+  $N_0 = 2$. Dieses Beispiel lässt sich verallgemeinern. Betrachten
+  wir allgemein Polynome vom Grad $k$ wie bspw.\ $p(n)$ von oben, dann
+  kann man zeigen (indem man einfach das $n^k$ ausklammert), dass
+  \[
+    p(n) \in \mathcal{O}(n^k)\,,
+  \]
+  d.\,h.\ lässt sich die Laufzeit eines Algorithmus durch ein Polynom
+  beschreiben, so hängt die asymptotische Laufzeit (also die Laufzeit,
+  wenn $n$ sehr groß wird) nur vom Grad des Polynoms ab!
+\end{itemize}
+Wir haben im dritten Beispiel schon gesehen, dass bspw.\ aus
+$f \in \mathcal{O}(n)$ schon folgt, dass auch $f \in \mathcal{O}(n^2)$
+und $f \in \mathcal{O}(n^3)$ etc. Wenn man nun so etwas sagt, wie
+``Der Algorithmus $f$ hat eine Laufzeit von $\mathcal{O}(n^2)$'', dann
+meint man damit (meistens) implizit auch, dass $f \not\in \mathcal{O}(n)$.
+Konkreter kann man solche Aussage machen, indem man weitere solcher Klassen einführt:
+
+\subsection*{Die Klasse $\Omega(\cdot)$}
+Analog wie oben definiert man für eine Funktion
+$g : \N \rightarrow \R_+$ die Menge
+\[
+  \Omega(g) \coloneqq \left\{ f : \N \rightarrow \R_+ \mid \exists c >
+    0, N_0 \in \N: \quad c\,f(n) \ge g(n) \quad \text{für alle } n \ge
+    N_0 \right\} \,.
+\]
+Diese Klasse enthält also alle Funktionen, die mindestens so schnell
+wachsen wie $g$. Man sieht leicht ein, dass für zwei Funktionen
+$f,g : \N \rightarrow \R_+$ gilt, dass
+\[
+  f \in \mathcal{O}(g) \qquad \text{genau dann, wenn} \qquad g \in
+  \Omega(f) \,,
+\]
+da die Definitionen sich ja im Wesentlichen nur im
+Ungleichheitszeichen unterscheiden. Anhand der Beispiele oben, findet
+man also bspw.
+\begin{itemize}
+\item $n^2 \in \Omega(n)$ oder
+\item $n \in \Omega(k)$, für $k \in \R$ beliebig.
+\end{itemize}
+Man kann aber auch zeigen, dass für Polynome $p(n)$ vom Grad $k$ gilt,
+dass
+\[
+  p \in \Omega(n^k)\,.
+\]
+Es gilt also sowohl $p \in \mathcal{O}(n^k)\,$ als auch
+$p \in \Omega(n^k)$.  Für solche Fälle führt man noch eine weitere
+Klasse ein.
+
+\subsection*{Die Klasse $\Theta(\cdot)$}
+Mit den Definitionen der Klassen $\mathcal{O}(\cdot)$ und
+$\Omega(\cdot)$ als Mengen von Funktionen, kann man die Klasse
+$\Theta(g)$ für eine Funktion $g : \N \rightarrow \R_+$ einfach
+definieren als
+\[
+  \Theta(g) = \mathcal{O}(g) \cap \Omega(g) \,,
+\]
+also alle Funktionen die sowohl in der Klasse $\mathcal{O}(g)$ als
+auch in der Klasse $\Omega(g)$ liegen. Man kann sich natürlich
+trotzdem eine explizite Definition wie für die anderen beiden Klassen
+hinschreiben (kann man ja mal als Übung versuchen).
+
+\subsection*{Abschließende Bemerkungen} Es gibt noch weitere Klassen,
+die man alle auf ähnliche Art und Weise definieren kann. Die Klasse
+$\mathcal{O}(\cdot)$ ist jedoch die mit Abstand wichtigste und
+begegnet einem nicht nur in der Informatik, sondern bspw.\ auch in der
+Numerik oder der Zahlentheorie.
+
+Man kann diese Klassen auch auf eine völlig andere Art und Weise
+definieren, in dem man den Quotienten zweier Funktionen betrachtet und
+dann den Grenzwert für $n \rightarrow \infty$ bildet. Mit dieser
+Definition erhält man in der Regel die selben Aussagen wie mit
+``unserer'' Definition, sie sind jedoch nicht vollständig äquivalent
+und lassen sich nicht 1-zu-1 ineinander überführen (siehe auch
+Wikipedia-Artikel \emph{Landau-Symbole} für mehr Infos).
+\end{document}
