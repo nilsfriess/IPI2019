@@ -1,0 +1,380 @@
+\documentclass[
+fontsize = 11pt,
+paper    = a4,
+BCOR     = 5mm,
+DIV      = 12,
+numbers  = noenddot,
+]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[ngerman]{babel}
+
+\usepackage{newpxtext}
+\usepackage[euler-digits]{eulervm}
+\usepackage{microtype}
+\recalctypearea
+
+\usepackage{setspace}
+\onehalfspacing
+
+\addtokomafont{disposition}{\rmfamily}
+
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+
+\usepackage[framemethod=TikZ, nobreak=false]{mdframed}
+\mdfdefinestyle{mms}{%
+  roundcorner=2mm,%
+%  innertopmargin=-1.2mm,%
+  backgroundcolor=gray!20}
+\def\MMS{\marginpar{%
+    \vspace{-1.5em}%
+    \begin{mdframed}[style=mms]%
+~~???%
+\end{mdframed}}}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  basicstyle=\footnotesize, 
+  language=C++,
+  %numbers=left,
+  stepnumber=1,
+  showstringspaces=false,
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+}
+
+\title{(Template-)Klassen}
+\author{IPI Tutorium WS 19/20}
+\date{}
+
+\begin{document}
+\maketitle
+Ziel: Klasse definieren, die ein dynamisches Array verwaltet, sodass
+der/die Entwickler/in sich nicht um die dynamische Speicherverwaltung
+(aka \lstinline{new} und \lstinline{delete}) kümmern muss (ähnliches
+Beispiel auch in der Vorlesung).
+
+Objekte der Klasse sollen verwendet werden können, wie ``normale''
+Arrays, d.h. folgendes Programm soll kompilieren:
+\begin{lstlisting}
+  int main() {
+    int size;
+    std::cout << "Arraygroesse eingeben";
+    std::cin >> size;
+  
+    Array a(size);
+
+    a[0] = 10;
+    a[1] = 20;
+
+    std::cout << a[0]; // 10
+    std::cout << a[1]; // 20
+  }
+\end{lstlisting}
+(Frage: Wieso kann man in diesem Programm kein statisch erzeugtes
+Array verwenden?\MMS) Eine erste Version der Klasse könnte so aussehen
+(die Zugriffe über [] funktionieren natürlich noch nicht):
+\begin{lstlisting}
+  class Array {
+    private:
+    int size;
+    int *data;
+
+    public:
+    Array(int t_size) {
+      size = t_size;
+      data = new int[size];
+    }
+  };
+\end{lstlisting}
+Der Speicher, der im Konstruktor mit \lstinline{new} dynamisch
+allokiert wird, muss auch irgendwo wieder freigegeben werden.  Wir
+definieren also eine Methode \lstinline{void free()}, die diese
+Aufgabe übernimmt:
+\begin{lstlisting}
+  class Array {
+    public:
+    ...
+    void free() {
+      delete[] data;
+    }
+  };
+\end{lstlisting}
+Man beachte die eckigen Klammern nach dem delete (warum sind die
+wichtig?). Jetzt hat man zwar eine Methode zur Verfügung, die den
+Speicher freigibt, allerdings muss man natürlich auch daran denken,
+die Methode auch aufzurufen, wenn das jeweilige Objekt nicht mehr
+benötigt wird (und man muss aufpassen, die Methode nicht aufzurufen
+und das Objekt danach weiter zu benutzen). Zum Glück gibt es in C++
+eine spezielle Methode, die sich eignet solche ``Aufräumarbeiten'' zu
+erledigen: den Destruktor. Anstelle der Methode \lstinline{free()}
+schreiben wir also:
+\begin{lstlisting}
+  class Array {
+    public:
+    ...
+    ~Array() {
+      delete[] data;
+    }
+  };
+\end{lstlisting}
+Frage: Wann wird der Destruktor aufgerufen?\MMS
+
+Bevor wir Arrayzugriffe mit eckigen Klammern implementieren, schreiben
+wir zunächst zwei Methoden \lstinline{int get(int pos)} und
+\lstinline{void set(int pos, int val)}, die ein Arrayelement
+zurückgeben bzw. setzen:
+\begin{lstlisting}
+  class Array {
+    public:
+    ...
+    void set(int pos, int val) {
+      data[pos] val;
+    }
+
+    int get(int pos) {
+      return data[pos];
+    }
+  };
+\end{lstlisting}
+Frage: Kann man die Methoden so verändern, dass ungültige
+Arrayzugriffe verhindert werden (also Zugriffe der Form
+\lstinline{a.set(10,2)}, wenn \lstinline{a} bspw. nur die Größe 5
+hat)?\MMS
+
+Nun ist folgendes möglich:
+\begin{lstlisting}
+  Array a(10);
+  a.set(0, 20);
+  a.get(0); // 20
+\end{lstlisting}
+Um nun Zugriffe wie im Beispiel am Anfang zu ermöglichen,
+\emph{überladen} (was bedeutet das?\MMS) wir den
+eckige-Klammern-Operator:
+\begin{lstlisting}
+  class Array {
+    public:
+    ...
+    int operator[](int pos) {
+      return data[pos];
+    }
+  };
+\end{lstlisting}
+Wollen wir mit diesem Operator nun sowohl die get, als auch die
+set-Methode ersetzen, gibt es noch ein Problem. Zuweisungen der Form
+\begin{lstlisting}
+  a[0] = 10;
+\end{lstlisting}
+führt zu dem etwas kryptischen Compilefehler \texttt{lvalue required
+  as left operand of assignment}, was nichts anderes bedeutet, dass
+wir hier versuchen einen Wert zuzuweisen, wo kein Wert zugewisen
+werden kann.  Das ist auch völlig klar: der Rückgabewert des
+\lstinline{operator[]} ist \lstinline|int| und wir versuchen dann
+einem \lstinline|int|-Wert (nicht einer \lstinline|int|-Variablen) den
+Wert 10 zuzuweisen, was natürlich keinen Sinn ergibt. Dieses Problem
+lässt sich leicht lösen: anstatt den \emph{Wert} des jeweiligen
+Arrayelements zurückzugeben, geben wir einfach eine \emph{Referenz}
+auf diesen Wert zurück. Dafür müssen wir lediglich den Rückgabetyp des
+Operators ändern, den Rest erledigt der Compiler:
+\begin{lstlisting}
+  class Array {
+    public:
+    ...
+    int& operator[](int pos) {
+      return data[pos];
+    }
+  };
+\end{lstlisting}
+Das Beispielprogramm vom Anfang kompiliert nun und funktioniert wie
+erwartet. Vollständig ist unsere Klasse jedoch noch nicht. Betracte
+dazu folgendes Beispiel:
+\begin{lstlisting}[numbers=left]
+  int main() {
+    Array a(10);
+    a[0] = 100;
+
+    Array b(a);
+    b[0] = 20;
+
+    std::cout << a[0] << ", ";
+    std::cout << b[0] << std::endl;
+  }
+\end{lstlisting}
+Übersetzt man dieses Programm und führt es aus, passieren zwei
+(evtl. unerwartete Dinge):
+\begin{itemize}
+\item Die Ausgabe ist \texttt{20, 20}
+\item Das Programm stürzt mit einem Fehler ab
+\end{itemize}
+Was passiert hier? Zunächst wird das Objekt \texttt{a} der Größe 10
+erstellt und dessen erstes Element auf 100 gesetzt. In Zeile 5 wird
+nun das Objekt \texttt{b} erstellt, allerdings nicht mit dem oben
+definierten Konstruktor, sondern aus dem Objekt \texttt{a}, mithilfe
+des implizit definierten (d.h. automatisch vom Compiler generierten)
+Copy-Konstruktors. Dieser Konstruktor macht folgendes: er durchläuft
+alle Eigenschaften des Objekts \texttt{a} (also hier die Variablen
+\texttt{size} und \texttt{data}) und kopiert deren Werte in das Objekt
+\texttt{b}. Da das Array \texttt{data} in der Klasse jedoch als Zeiger
+gespeichert wird, werden nicht die einzelnen Arrayelemente kopiert,
+sondern nur der Zeiger. Dabei entsteht folgendes Problem: Es gibt nun
+zwei Objekte (\texttt{a} und \texttt{b}) die \textbf{auf das selbe
+  Array zeigen}. Nun erklärt sich auch die Ausgabe. Da die beiden
+Objekte nun auf das selbe Array zeigen, führt eine Änderung des Arrays
+in \texttt{b} auch zu einer Änderung des Arrays in \texttt{b} (denn es
+handelt sich ja um das selbe Array!). Dieses Verhalten ist natürlich
+(in der Regel) unerwünscht, d.h. wir müssen den Copy-Konstruktor nun
+selbst definieren und das Array ordentlich kopieren:
+\begin{lstlisting}
+  class Array {
+    public:
+    ...
+    Array(Array &other) {
+      size = other.size;
+      data = new int[size];
+      for (int i=0; i<size; i++)
+      data[i] = other.data[i];
+    }
+  };  
+\end{lstlisting}
+Nun funktioniert das Programm wie erwartet.  Frage: Aus welchem Grund
+ist das Programm oben abgestürtzt?\MMS
+
+Das selbe Problem tritt auch auf, wenn wir anstatt ein Objekt zu
+kopieren, ein Objekt einem anderen zuweisen (was genau ist der
+Unterschied?\MMS):
+\begin{lstlisting}
+  Array a(10);
+  a[0] = 10;
+  Array b(20);
+  b[0] = 20;
+  
+  b = a;
+  std::cout << b[0] << std::endl; // 10
+\end{lstlisting}
+Das Problem löst man analog zu oben, jetzt muss man allerdings den
+Zuweisungsoperator definieren: \lstinline{Array& operator=(Array &other)}.
+Warum ist es sinnvoll, dass der Zuweisungsoperator den
+Rückgabetyp \lstinline{Array&} hat?\MMS
+
+Das oben beobachtete Problem tritt übrigens immer auf, wenn in einer
+Klasse dynamisch (also mit \lstinline|new| speicher allokiert wird).
+Die Regel, dass man in diesem Fall die drei Methoden Destruktor,
+Copy-Konstruktor und Zuweisungsoperator selbst definieren muss, ist
+als \emph{Rule of Three} bekannt. Nun haben wir eine vollständige
+Array-Klasse, die natürlich noch beliebig erweitert werden kann.
+\begin{lstlisting}
+  class Array {
+    private:
+    int *data;
+    int size;
+    public:
+    Array(int t_size) {
+      size = t_size;
+      data = new int[size];
+    }
+    
+    Array(Array &other) {
+      size = other.size;
+      data = new int[size];
+      for (int i=0; i<size; i++)
+      data[i] = other.data[i];
+    }
+    
+    Array& operator=(Array &other) {
+      // Uebung :)
+    }
+    
+    int& operator[](int pos) {
+      return data[pos]; 
+    }
+    
+    ~Array() {
+      delete[] data;
+    }
+  };
+\end{lstlisting}
+
+Schön wäre es natürlich, wenn man nicht nur \lstinline|int|-Arrays,
+sondern Arrays beliebiger Typen verwalten könnte. Dazu templatisieren
+wir die Klasse, d.h. überall wo wir den Datentyp des Arrays (also
+\lstinline{int} verwenden, schreiben wir einfach \texttt{T} und
+deklarieren die Klasse als Templateklasse):
+\begin{lstlisting}
+  template <class T>
+  class Array {
+    private:
+    T *data;
+    int size;
+    public:
+    Array(int t_size) {
+      size = t_size;
+      data = new T[size];
+    }
+    
+    Array(Array &other) {
+      size = other.size;
+      data = new T[size];
+      for (int i=0; i<size; i++)
+      data[i] = other.data[i];
+    }
+    
+    Array& operator=(Array &other) {
+      // Uebung :)
+    }
+    
+    T& operator[](int pos) {
+      return data[pos];
+    }
+    
+    ~Array() {
+      delete[] data;
+    }
+  };
+\end{lstlisting}
+Frage: Anstatt \lstinline|template <class T>| kann man auch
+\lstinline|template <typename T>| schreiben. Was ist der
+Unterschied?\MMS
+
+Um diese Klasse verwenden zu können, muss nun beim erstellen des
+Objekts der Templateparameter gesetzt wernde, d.h.
+\begin{lstlisting}
+  Array<int> a(10); // int-Array mit 10 Elementen
+
+  Array<double> b(20); // double-Array mit 20 Elementen
+\end{lstlisting}
+Natürlich können auch komplexere Datentypen verwendet werden, wie
+bspw. die Klasse Complex aus der Vorlesung:
+\begin{lstlisting}
+  Array<Complex> c(3); // Array mit 3 komplexen Zahlen
+\end{lstlisting}
+Hier ist nun folgendes wichtig: Verwendet man alle drei Beispiele im
+selben Programm (also \lstinline|Array<int> a(10)|,
+\lstinline|Array<double> a(10)| und \lstinline|Array<Complex> a(10)|)
+dann werden \textbf{zur Compilezeit} drei unterschiedliche Klassen
+erzeugt, für jeden Templatetype eine. Das heißt, zur Laufzeit verhält
+sich das Programm so, als hätte man selbst für jeden einzelnen Typ
+eine separate Klasse geschrieben.  Das bedeutet, trotz der
+Abstrahierung der Klasse (anstatt \lstinline{int}-Array ein Array
+beliebigen Typs) wird das Programm nicht langsamer. Allerdings
+benötigt das Programm länger zum Compilieren (da die ganzen Klassen ja
+vom Compiler erstellt werden müssen), was bei verschachtelten
+Templateklassen oft zu unerträglich lange Compilezeiten führt.
+
+Ein weiterer Nachteil ist, dass Fehlermeldungen, die durch Templateklassen
+erzeugt werden in der Regel völlig unbrauchbar sind. Außerdem können
+verschachtelte Templateklasse (also bspw. Templateklassen die als
+Templateparameter selbst wieder Templateklassen verwenden) schnell
+sehr unübersichtlich werden.
+\end{document}
