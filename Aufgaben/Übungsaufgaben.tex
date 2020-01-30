@@ -13,16 +13,18 @@
 \usepackage{enumerate}
 \usepackage{graphicx}
 \usepackage{listings}
+\usepackage{float}
 \usepackage{color}
 \usepackage{hyperref}
+\usepackage{multicol}
 \usepackage[right=3.5cm, left=3.5cm, top=3cm, bottom=3cm]{geometry}
 \usepackage{scrlayer-scrpage}
 \usepackage{array}   % for \newcolumntype macro
 
-\clearpairofpagestyles
+%\clearpairofpagestyles
  
 \setkomafont{pagehead}{\scshape\footnotesize}
-\setkomafont{pagination}{}
+%\setkomafont{pagination}{}
 
 \KOMAoptions{
    headsepline = true
@@ -397,15 +399,15 @@ vereinfachte \lstinline{if}-Anweisung:
 \begin{exercise}
 \begin{enumerate}[a)]
 \item Was macht der folgende Algorithmus?
-  \begin{lstlisting}
-    void func(int a[], int b) {
-      for (int j = 1; j < b; j++)
-      for (int i = j; i > 0 && a[i-1] > a[i]; i--) {
-        int c = a[i];
-        a[i] = a[i-1];
-        a[i-1] = c;
-      }
+\begin{lstlisting}
+void func(int a[], int b) {
+  for (int j = 1; j < b; j++)
+    for (int i = j; i > 0 && a[i-1] > a[i]; i--) {
+      int c = a[i];
+      a[i] = a[i-1];
+      a[i-1] = c;
     }
+}
   \end{lstlisting}
 \item Welche Laufzeit hat der Algorithmus im schlechtesten Fall?
 \end{enumerate}
@@ -498,7 +500,7 @@ folgendermaßen aus:
 \begin{exercise}
 Gegeben seien folgende Zahlen:
 $$ \{ 5, 8, 2, 10, 1, 3, 2, 6 \} $$
-\begin{itemize}
+\begin{enumerate}[a)]
 \item Baue aus diesen Zahlen einen Max-Heap (d.h. das größte Element
   steht in der Wurzel). Zeichne den vollständigen Baum nach jedem
   Schritt und erläutere kurz, wie das Element eingefügt wurde.
@@ -508,7 +510,7 @@ $$ \{ 5, 8, 2, 10, 1, 3, 2, 6 \} $$
   Elemente $n$)? Wie kann man daraus die Komplexität der Operation
   ``Einfügen'' ableiten?
 \item Erläutere kurz die Funktionsweise von Heapsort.
-\end{itemize}
+\end{enumerate}
 \end{exercise}
 
 \begin{exercise}
@@ -574,7 +576,7 @@ Alle Teilaufgaben dieser Aufgabe sind von der selben Art und können unabhängig
 Es wird unterschieden zwischen Programmen (der vollständige Code ist gegeben und muss so ausführbar sein) und Ausschnitten (nur Teile sind gegeben; fehlende Deklarationen von Variablen oder Funktionen sind \emph{keine}
 Fehler).
 \begin{enumerate}[a)]
-    \item Betrachte das folgende Programm: \hfill 5 Fehler
+    \item Betrachte das folgende Programm: \hfill min. 5 Fehler
     \begin{lstlisting}
 int main() {
   array<int,10> zahlen = {0,1,2,3,4,5,6,7,8,9,10};
@@ -583,7 +585,7 @@ int main() {
   }
 }
     \end{lstlisting}
-    \item Betrachte den folgenden Ausschnitt: \hfill 6 Fehler
+    \item Betrachte den folgenden Ausschnitt: \hfill min. 6 Fehler
     \begin{lstlisting}
 ...
 void summe(int m) {
@@ -596,9 +598,179 @@ void summe(int m) {
 std::cout >> "Summe = " summe(10);
       
 ...
-    \end{lstlisting}
+\end{lstlisting}
+
+\item Betrachte das folgende Programm: \hfill min. 5 Fehler
+  \begin{lstlisting}
+int main() {
+  const int x = std::cin >> x;
+  // Pruefe ob x gerade
+  if (x % 2 = 0)
+    cout << "x ist gerade";
+    x = x / 2;
+  else
+    cout << "x ist ungerade";
+}
+\end{lstlisting}
+\newpage
+\item Betrachte den folgenden Ausschnitt: \hfill min. 5 Fehler
+  \begin{lstlisting}
+...
+// Suche Maximum von arr    
+void max(int arr[], int x);
+{
+  int temp = arr[0]
+  for(i = 0; i =< arr.size(); i++) {
+    if( arr[i] < temp) {
+      temp = arr[j];
+    }
+  return temp;
+}    
+\end{lstlisting}
+
+\item Betrachte das folgende Programm:\hfill min. 6 Fehler
+  \begin{lstlisting}
+template <class T>
+class A{
+  A(T a){
+    b = a;
+  }
+private:
+  void print() {
+    std::cout << b;
+  }
+};
+
+int main() {
+  A a(3);
+  a.print();
+}
+  \end{lstlisting}
 \end{enumerate}
 \end{exercise}
+
+\begin{exercise}
+  Gegeben sei ein aufsteigend sortiertes Array von ganzen Zahlen
+  \lstinline|int[n] a| der Länge \lstinline|n| und eine ganze Zahl
+  \lstinline|int x|. Es darf angenommen werden, dass \lstinline|a|
+  nicht leer ist.
+
+  Die folgenden Funkionen implementieren eine \emph{binäre Suche} von
+  \lstinline|x| in \lstinline|a| als Funktion \lstinline|find(a,n,x)|.
+  \begin{lstlisting}
+int find(int a[], int left, int right, int x) {
+    int mid = (left + right) / 2;
+
+    if (left > right || x == a[mid])
+        return mid;
+
+    if (x < a[mid])
+        return find(a, left, mid-1, x);
+    else
+        return find(a, mid+1, right, x);
+
+}
+
+int find(int a[], int n, int x) {
+    return find(a, 0, n-1, x);
+}
+\end{lstlisting}
+\begin{enumerate}[a)]
+\item Was berechnet \lstinline|find(a,n,x)|? Welche Bedeutung hat der Rückgabewert?
+\item Was ist die Komplexität des Algorithmus in Abhängigkeit von
+  \lstinline|n|? Es genügt den Vergleich \lstinline|x == a[mid]|
+  zu betrachten (d.\,h.\ es soll herausgefunden werden, wie oft
+  dieser Vergleich in Abhänigkeit von \lstinline|n| durchgeführt wird).
+\item Was wird zurückgegeben, wenn der Algorithmus ``erfolglos'' endet?
+  Ändere den Algorithmus so, dass in diesem Fall -1 zurückgegeben wird.
+\item Schreibe eine iterative (d.\,h.\ nicht-rekursive) Version des
+  Algorithmus.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+  In dieser Aufgabe soll eine Methode implementiert werden, die Teil einer Klasse
+  innerhalb eines Tetris-Programms sein könnte. Die Klasse soll dabei das Spielfeld
+  repräsentieren und zwar als zweidimensionales Array (d.\,h.\ als Matrix). Dazu
+  nehmen wir an, dass eine Matrix-Klasse existiert, die bspw. so benutzt wird:
+  \begin{lstlisting}
+Matrix<int,10,7> grid; // 10x7 Matrix mit Integer-Werten
+  \end{lstlisting}
+  Zugriff auf die Matrixelement sei mit eckigen Klammern möglich, d.\,h.\ um das Element
+  in der 5. Zeile und 4. Spalte zu verändern, kann man schreiben:
+  \begin{lstlisting}
+spielfeld[4][3] = 2;
+  \end{lstlisting}
+  Für das folgende Spielfeld enthält die Variable grid dann folgende Werte (die Werte codieren die Farben)
+  \begin{multicols}{2}
+    \includegraphics[width=0.8\linewidth]{tetris}
+    %\vfill\null
+    %\columnbreak
+
+    \begin{lstlisting}
+grid = {
+  { 0, 0, 0, 0, 0, 0, 0 },
+  { 0, 0, 0, 0, 0, 0, 0 },
+  { 0, 0, 0, 0, 0, 0, 0 },
+  { 0, 0, 0, 0, 0, 0, 0 },
+  { 0, 0, 0, 0, 0, 0, 0 },
+  { 0, 0, 0, 0, 0, 0, 0 },
+  { 1, 0, 0, 0, 0, 0, 0 },
+  { 1, 0, 0, 0, 0, 0, 1 },
+  { 1, 0, 0, 0, 4, 4, 1 },
+  { 1, 2, 3, 3, 0, 4, 1 }
+};
+    \end{lstlisting}
+  \end{multicols}
+  Die Aufgabe ist nun eine Methode zu schreiben, die die unterste Zeile löscht,
+  falls sie ``voll'' ist.
+  \begin{enumerate}[a)]
+  \item Schreibe eine Methode \lstinline|bool is_last_line_complete()|, die prüft,
+    ob die letzte Zeile des Grids gelöscht werden kann, d.\,h.\ prüft, ob diese
+    Zeile nur nicht-null Einträge enthält. Die Größe des Spielfeldes kann dabei
+    mit \lstinline|grid.rows()| bzw. \lstinline|grid.cols()| abgefragt werden.
+  \item Schreibe nun eine Methode, die die letzte Zeile löscht. Dabei sollen einfach
+    alle Zeilen darüber nach unten verschoben werden und die erste Zeile des
+    Spielfelds mit Nullen gefüllt werden.
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+  Diese Aufgabe beschäftigt sich mit sog. \emph{Monte Carlo Integration}. Ziel ist es
+  die Zahl $\pi$ zu approximieren. Die Methode basiert auf folgender Idee:
+
+  Generiert man $n$ zufällige Punkte in einem Quadrat der Länge $l$ und zählt dann die Punkte,
+  die in diesem Quadrat in einem Kreis liegen, der den Durchmesser $l$ hat, dann gilt
+  \begin{equation}
+    \label{eq:mc}
+    \lim_{n \rightarrow \infty} \frac{A_{\text{Kreis}}}{A_{\text{Quadrat}}} = \pi\,,
+  \end{equation}
+  wobei $A$ die Anzahl der Punkte innerhalb des Kreises bzw. des Quadrates angibt.
+  In dieser Aufgabe soll eine Funktion geschrieben werden, die für gegebenes $n$ den
+  Quotienten in~\eqref{eq:mc} berechnet. Als Quadrat wählen wir das Quadrat mit den
+  Randpunkten $(-1,-1)\,,(-1,1)\,, (1,1)\,, (1,-1)$. Allerdings betrachten wir nur ein
+  Viertel dieses Quadrats und multiplizieren später das Ergebnis einfach mit 4, siehe Abbildung:
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{montecarlo.png}
+  \end{figure}
+  Ziel ist es nun eine Funktion \lstinline|double pi_mc(int n)| zu schreiben, die nach dem
+  obigen Prinzip $pi$ approximiert. Gehe dazu folgendermaßen vor:
+  \begin{itemize}
+  \item Erzeuge $n$ zufällige Punkte im Einheitsquadrat (wie in der Abbildung oben).
+    Es kann davon ausgegangen werden, dass eine Funktion \lstinline|randu(int a, int b)|
+    existiert, die gleichverteilte Zufallszahlen im Intervall $[a,b]$ erzeugt.
+  \item Zähle die Punkte, die innerhalb des Viertelkreises liegen (in der Abbildung rot). Hinweis:
+    Der Kreis hat Radius 1. Der Abstand zweier Punkte $p_1 = (x_1, y_1)$ und $p_2 = (x_2, y_2)$ ist
+    \[
+      d(p_1, p_2) = \sqrt{{(x_1 - x_2)}^2 - {(y_1 - y_2)}^2}\,.
+    \]
+  \item Teile am Ende die Anzahl der Punkte im Kreis durch die Anzahl der insgesamt
+    erzeugten Punkte und multipliziere das Ergebnis noch mit vier (s.o.).
+  \end{itemize}
+  
+\end{exercise}
+
 \end{document}
 
 % Local Variables:

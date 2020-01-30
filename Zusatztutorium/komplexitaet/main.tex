@@ -1,0 +1,331 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+
+\usepackage[utf8]{inputenc}   %Zeichencodierung Text
+\usepackage[T1]{fontenc}        %Schriftsatz Dokument
+\usepackage[ngerman]{babel}     %Wortdefinitionen
+\usepackage{amsmath,amssymb,amsthm}    %Standard-Mathe-Paket
+\usepackage{listings}
+\usepackage{color}
+\usepackage[light]{kpfonts}
+
+\include{mathsetup}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\definecolor{highlight}{rgb}{1,0.6,0.6}
+
+\lstset{ %
+  basicstyle=\footnotesize,
+  language=C++,
+  stepnumber=1,
+  showstringspaces=false,
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+  xleftmargin=2em,
+  frame=single
+}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\title{Komplexität}
+\begin{document}
+\begin{frame}[fragile]
+  \maketitle
+\end{frame}
+
+\section{Definition der Komplexitätsklassen}
+\begin{frame}[fragile]
+  Sei $f,g : \N \rightarrow \R_{+}$ zwei Funktionen. Dann ist
+  \pause
+  \begin{itemize}
+  \item $g(n) = \Omega(f(n))$, wenn es Konstanten $c, N > 0$ gibt, sodass
+    \[
+      g(n) \ge c\, f(n) \qquad \text{ für alle } n \ge N \,.
+    \]
+    \pause
+  \item $g(n) = \mathcal{O}(f(n))$, wenn es Konstanten $c, N > 0$ gibt, sodass
+    \[
+      g(n) \le c\, f(n) \qquad \text{ für alle } n \ge N \,.
+    \]
+    \pause
+  \item $g(n) = \Theta(f(n))$, wenn
+    \[
+      g(n) = \Omega(f(n)) \quad \text{und} \quad g(n) = \mathcal{O}(f(n)) \,.
+    \]
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \textbf{Bemerkungen}
+  \begin{itemize}
+  \item Die Konstanten müssen von $n$ unabhängig sein.
+  \item Die wichtigste Klasse ist $\mathcal{O}(\cdot)$.
+  \item $g(n)$ entspricht später der Laufzeit eines Algorithmus in Abhängigkeit der Eingabegröße $n$.\\
+    Sagen dann: ``Der Algorithmus wächst wie $f(n)$''
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{Beispiele}
+  Sei $g(n) = 2n$.\\ Behauptung: $g(n) = \mathcal{O}(n)$.\\[2ex]
+  \pause
+  \begin{proof}
+    Müssen zeigen: $\exists C, N$, sd. $2n \le Cn$ für alle $n \ge N$.\\[2ex]
+    \pause
+    Mit $C = 3$ und $N = 1$ klappt's (zum Beispiel).
+  \end{proof}
+  \pause
+  Das funktioniert natürlich genau so mit $g(n) = 3n$, $g(n) = 4n$ etc. Also
+  \[
+    \text{Für} \quad g(n) = kn \quad \text{ gilt } \quad g(n) = \mathcal{O}(n)\,.
+  \]
+  In anderen Worten:
+  \begin{center}
+    Der Koeffizient vor dem $n$ spielt keine Rolle.
+  \end{center}
+\end{frame}
+
+\begin{frame}{Beispiele}
+  Sei $g(n) = n$.\\ Behauptung: $g(n) = \mathcal{O}(\frac{1}{3}n)$.\\[2ex]
+  \pause
+  \begin{proof}
+    Müssen zeigen: $\exists C, N$, sd. $n \le \frac{C}{3}n$ für alle $n \ge N$.\\[2ex]
+    \pause
+    Mit $C = 4$ und $N = 1$ klappt's (zum Beispiel).
+  \end{proof}
+  \pause
+  \textbf{Frage:}\quad Gilt auch
+  \[
+     g(n) = \mathcal{O}(r\,n)\,,\quad r \text{ beliebig?}
+   \]
+   \pause
+   Haben also gezeigt:
+   \[
+     \mathcal{O}(n) \, = \, \mathcal{O}(r\,n)
+   \]
+   für $r \in \R$ beliebig.
+ \end{frame}
+
+ \begin{frame}{Beispiele}
+  Sei $g(n) = n^2$.\\ Behauptung: $g(n) \neq \mathcal{O}(n)$.\\[2ex]
+  \pause
+  \begin{proof}
+    Es müsste $c$ existieren, sd. $n^2 \le cn$, bzw.
+    $n \le c$.
+    \pause
+    Da $c$ von $n$ unabhängig sein muss, kann das nicht funktionieren
+    (für festes $c$ ist $n = c+1 > c$).
+  \end{proof}
+  \pause
+  Allgemeiner gilt:
+  \[
+    n^k \neq \mathcal{O}(n^l) \quad \text{für} \quad k > l \,.
+  \]
+\end{frame}
+
+\begin{frame}{Beispiele}
+  Sei $g(n) = n^2$.\\ Behauptung: $g(n) = \mathcal{O}(n^3)$.\\[2ex]
+  \pause
+  \begin{proof}
+    Mit $c = 1$, $N = 1$ klappt's.
+  \end{proof}
+  \pause
+  Allgemeiner gilt:
+  \[
+    n^l = \mathcal{O}(n^k) \quad \text{für} \quad k > l \,.
+  \]
+\end{frame}
+
+\begin{frame}{Beispiele}
+  Sei $g(n) = n^3 + 2n^2 + n$.\\ Behauptung: $g(n) = \mathcal{O}(n^3)$.\\[2ex]
+  \pause
+  \begin{proof}
+    Mit $c = 4$, $N = 1$ klappt's (nachrechnen).
+  \end{proof}
+  \pause
+  Allgemein: Ist $g(n) = \sum_{i=0}^m a_i n^i$ ein Polynom, dann gilt
+  \[
+    g(n) = \mathcal{O}(n^m)\,,
+  \]
+  das heißt für Polynome ist nur der Grad entscheidend.
+\end{frame}
+
+\section{Einfache Komplexitätsanalysen}
+\begin{frame}[fragile]
+  Wollen die Komplexität des folgenden Algorithmus bestimmen.
+  \begin{lstlisting}[numbers=left]
+    int sum(int a[], int n) {
+      int res = 0;      
+      for (int i=0; i < n; i++) {
+        res = res + a[i];
+      }
+      return res;
+    }
+  \end{lstlisting}
+  \pause
+  Müssen also zunächst herausfinden, wie oft die Schleife ausgeführt wird und dann, wie groß die Komplexität der Befehle innerhalb der Schleife ist.
+  \pause
+  \begin{itemize}
+  \item Befehl in der Schleife wird $n$-mal ausgeführt.
+  \pause
+  \item Befehl in der Schleife (Zeile 4) hängt nicht von $n$ hab, d.h. Komplexität $\mathcal{O}(1)$.
+  \end{itemize}
+  \pause
+  Insgesamt also $n$ mal $\mathcal{O}(1)$, also $\mathcal{O}(n)$.
+\end{frame}
+
+\begin{frame}[fragile]
+  Wollen die Komplexität des folgenden Algorithmus bestimmen.
+  \begin{lstlisting}[numbers=left]
+    int sum(Matrix mat) {
+      int n = mat.size();
+      int res = 0;
+      
+      for (int i=0; i < n; i++)
+        for (int j=0; j < n; j++)
+          res += mat[i][j];
+      
+      return res;
+    }
+  \end{lstlisting}
+  \pause
+  \begin{itemize}
+  \item Äußere Schleife läuft $n$ mal durch.
+  \pause
+  \item Innere Schleife läuft $n$ mal durch.
+  \pause
+  \item Befehl in der Schleife (Zeile 7) hat konstante Komplexität.
+  \end{itemize}
+  \pause
+  Insgesamt also $\mathcal{O}(n^2)$.
+\end{frame}
+
+\begin{frame}[fragile]
+  In welcher Komplexitätsklasse liegt der folgende Algorithmus?
+  \begin{lstlisting}[numbers=left]
+    int func(int n) {
+      int x = 2;
+      
+      for (int i=0; i < n / 2; i++)
+        x = x * 2;
+      
+      return res;
+    }
+  \end{lstlisting}
+  \pause
+  Der Algorithmus liegt in
+  \[
+    \mathcal{O}(\frac{n}{2}).
+  \]
+  \pause
+  Haben vorhin gezeigt:
+  $\mathcal{O}(n/2) = \mathcal{O}(n)$, d.h. der Algorithmus liegt in $\mathcal{O}(n)$.
+\end{frame}
+
+\section{Kompliziertere Komplexitätsanalysen}
+
+\begin{frame}[fragile]
+  Wollen die Komplexität des folgenden Algorithmus bestimmen.
+  \begin{lstlisting}[numbers=left]
+    void selectionsort(std::vector<double> &list) {
+      int n = list.size();
+      for (int i=0; i < n-1; i++) {
+        int min = i;
+        for (int j = i+1; j < n; j++)
+          if (list[j] < list[min])
+            min = j;
+        std::swap(list[i], list[min]);
+      }
+    }
+  \end{lstlisting}
+  \pause
+  \textbf{Behauptung.}\quad Selection-Sort liegt in $\mathcal{O}(n^2)$.
+  \begin{proof}
+    Tafel.
+  \end{proof}
+\end{frame}
+
+\begin{frame}[fragile]
+  Wollen die Komplexität des folgenden Algorithmus bestimmen.
+  \begin{lstlisting}[numbers=left]
+    template <class T>
+    void gausian_elimination(Matrix<T> &mat) {
+      for (int i=0; i < mat.rows() - 1; i++) {
+        for (int k=i+1; k < mat.rows(); k++) {
+          double t = mat[k][i] / mat[i][i];
+          for (int j=0; j < mat.cols(); j++) {
+            mat[k][j] = mat[k][j] - t * mat[i][j];
+          }
+        }
+      }
+    }
+  \end{lstlisting}
+  \pause
+  \textbf{Behauptung.}\quad Gauß-Elimination liegt in $\mathcal{O}(n^3)$
+  \begin{proof}
+    Übung.
+  \end{proof}
+\end{frame}
+
+\begin{frame}[fragile]
+  Wollen die Komplexität des folgenden Algorithmus bestimmen.
+  \begin{lstlisting}[numbers=left]
+    ...
+    int k = 0;
+    for (int i=n/2; i <= n; i++) {
+      for (int j=2; j <= n; j = j*2) {
+        k = k + n / 2;
+      }
+    }
+    ...
+  \end{lstlisting}
+  \pause
+  \textbf{Behauptung.}\quad Der Algorithmus liegt in $\mathcal{O}(n \log n)$.
+  \begin{proof}
+    Übung.\\
+    \begin{itemize}
+    \item Überlege zuerst wie oft die innere Schleife durchläuft ($j$ wird jedes mal verdoppelt).
+    \item Überlege dann, wie oft die äußere Schleife durchläuft.
+    \end{itemize}
+  \end{proof}
+\end{frame}
+
+\begin{frame}[fragile]
+  Wie oft wird \emph{IPI} ausgegeben?
+  \begin{lstlisting}[numbers=left]
+    void fun(int n) 
+    { 
+      for (int i=1; i<=n; i++) 
+        for (int j=1; j<=log(i); j++) 
+          std::cout << "IPI"; 
+    }
+  \end{lstlisting}
+  \pause
+  \textbf{Übung.}\\[2ex]
+  Hinweise:
+  \begin{itemize}
+  \item $\log(a_1) + \log(a_2) + \dotsc + \log(a_n) = log(a_1 \cdot a_2 \cdot \dotsc \cdot a_n)$
+  \item $\mathcal{O}(\log n!) = \mathcal{O}(n \log n)$\hfill(Stirling Formel)
+  \end{itemize}
+\end{frame}
+
+
+
+
+
+\end{document}
